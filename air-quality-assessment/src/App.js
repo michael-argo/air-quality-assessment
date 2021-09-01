@@ -26,7 +26,9 @@ const App = () => {
   useEffect(() => {
     const asyncCheckSession = async () => {
       await axios
-        .get(`${fetchUrl}/cities?sort=asc&order_by=city&limit=100000`)
+        .get(
+          `${fetchUrl}/cities?sort=asc&order_by=city&limit=100000&country=US`
+        )
         .then((e) => initCityDropdown(e))
         .catch((err) => setErrorMessage(err));
     };
@@ -54,7 +56,7 @@ const App = () => {
       setErrorMessage(null);
     }
 
-    const cityFetchUrl = `${fetchUrl}/measurements?limit=1&city=`;
+    const cityFetchUrl = `${fetchUrl}/measurements?limit=1&country=US&city=`;
     const fetchRequests = Object.keys(selectedCities).map((opt) => {
       return axios.get(`${cityFetchUrl}${selectedCities[opt]}`);
     });
@@ -105,7 +107,6 @@ const App = () => {
     <Segment placeholder>
       <Grid columns={2} stackable textAlign="center">
         <Divider vertical>And</Divider>
-
         <Grid.Row verticalAlign="middle">
           {cityComponent(1)}
           {cityComponent(2)}
